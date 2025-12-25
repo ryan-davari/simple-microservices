@@ -10,6 +10,9 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<AppDbContext>(opt => 
     opt.UseInMemoryDatabase("InMem"));
 
+// Add Scopped services
+builder.Services.AddScoped<IPlatformRepo, PlatformRepo>();
+
 // Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -22,6 +25,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+PrepDb.PrepPopulation(app);
 
 app.UseHttpsRedirection();
 
