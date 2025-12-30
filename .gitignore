@@ -7,7 +7,9 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/main/Dotnet.gitignore
 
+############################################
 # Build results
+############################################
 [Dd]ebug/
 [Dd]ebugPublic/
 [Rr]elease/
@@ -23,32 +25,67 @@ bld/
 [Ll]og/
 [Ll]ogs/
 
+############################################
 # .NET Core
+############################################
 project.lock.json
 project.fragment.lock.json
 artifacts/
 
+############################################
 # ASP.NET Scaffolding
+############################################
 ScaffoldingReadMe.txt
 
+############################################
 # NuGet Packages
+############################################
 *.nupkg
 # NuGet Symbol Packages
 *.snupkg
 
+############################################
 # Others
+############################################
 ~$*
 *~
 CodeCoverage/
 
+############################################
 # MSBuild Binary and Structured Log
+############################################
 *.binlog
 
+############################################
 # MSTest test Results
+############################################
 [Tt]est[Rr]esult*/
 [Bb]uild[Ll]og.*
 
+############################################
 # NUnit
+############################################
 *.VisualState.xml
 TestResult.xml
 nunit-*.xml
+
+############################################
+# Visual Studio / VS 2022–2026 (ADDED)
+############################################
+.vs/
+.vscode/
+
+# Visual Studio user-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.csproj.user
+
+# Visual Studio 2026 workspace folder
+v18/
+
+############################################
+# Rider / JetBrains (optional but safe)
+############################################
+.idea/
