@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using PlatformService.Data;
+using PlatformService.SyncDataServices.Http;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,7 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
 
 // Add Scopped services
 builder.Services.AddScoped<IPlatformRepo, PlatformRepo>();
+builder.Services.AddHttpClient<ICommandDataClient, HttpCommandDataClient>();
 
 // Swagger
 builder.Services.AddEndpointsApiExplorer();
@@ -30,6 +32,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+IConfiguration configuration = builder.Configuration;
+
+Console.WriteLine($"--> CommandService Endpoint {configuration["commandService"]}");
 
 app.UseHttpsRedirection();
 
