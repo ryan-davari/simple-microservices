@@ -4,15 +4,29 @@ using PlatformService.SyncDataServices.Http;
 
 var builder = WebApplication.CreateBuilder(args);
 
+IConfiguration configuration = builder.Configuration;
+
 // Add services to the container.
 builder.Services.AddControllers();
 
 // Automapper
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-// In Memory Database
-builder.Services.AddDbContext<AppDbContext>(opt => 
-    opt.UseInMemoryDatabase("InMem"));
+if (builder.Environment.IsProduction())
+{
+    Console.WriteLine("--> Using SqlServer Db");
+    builder.Services.AddDbContext<AppDbContext>(opt =>
+    {
+        opt.UseSqlServer(configuration.GetConnectionString("PlatformsConn"));
+    });
+} 
+else
+{
+    Console.WriteLine("--> Using InMem Db");
+    // In Memory Database
+    builder.Services.AddDbContext<AppDbContext>(opt => 
+        opt.UseInMemoryDatabase("InMem"));    
+}
 
 // Add Scopped services
 builder.Services.AddScoped<IPlatformRepo, PlatformRepo>();
@@ -24,7 +38,7 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-PrepDb.PrepPopulation(app);
+PrepDb.PrepPopulation(app, builder.Environment.IsProduction());
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -32,8 +46,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-IConfiguration configuration = builder.Configuration;
 
 Console.WriteLine($"--> CommandService Endpoint {configuration["commandService"]}");
 
