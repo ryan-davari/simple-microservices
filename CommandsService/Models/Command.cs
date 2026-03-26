@@ -10,7 +10,6 @@ namespace CommandsService.Models
     {
         public Command()
         {
-            Platform = new Platform();
         }
 
         [Key]
@@ -22,6 +21,6 @@ namespace CommandsService.Models
         public string CommandLine { get; set; }
         [Required]
         public int PlatformId { get; set; }
-        public Platform Platform { get; set; }
+        public virtual Platform Platform { get; set; }
     }
 }

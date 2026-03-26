@@ -27,7 +27,7 @@ namespace CommandsService.Controllers
 
             var platformItems = _repository.GetAllPlatforms();
 
-            return Ok(_mapper.Map<IEnumerable<PlatformreadDto>>(platformItems));
+            return Ok(_mapper.Map<IEnumerable<PlatformReadDto>>(platformItems));
         }
 
 
@@ -37,9 +37,5 @@ namespace CommandsService.Controllers
             Console.WriteLine("--> Inbound POST # Command Service");
             return Ok("Inbound test of from Platform Controller");
         }
-    }
-
-    internal class PlatformreadDto
-    {
     }
 }

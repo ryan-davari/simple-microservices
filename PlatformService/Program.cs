@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using PlatformService.AsyncDataServices;
 using PlatformService.Data;
 using PlatformService.SyncDataServices.Http;
 
@@ -31,6 +32,8 @@ else
 // Add Scopped services
 builder.Services.AddScoped<IPlatformRepo, PlatformRepo>();
 builder.Services.AddHttpClient<ICommandDataClient, HttpCommandDataClient>();
+builder.Services.AddSingleton<MessageBusClient>();
+builder.Services.AddSingleton<IMessageBusClient>(sp => sp.GetRequiredService<MessageBusClient>());
 
 // Swagger
 builder.Services.AddEndpointsApiExplorer();
@@ -48,6 +51,10 @@ if (app.Environment.IsDevelopment())
 }
 
 Console.WriteLine($"--> CommandService Endpoint {configuration["commandService"]}");
+
+// Rabbit MQ Initialize
+var messageBusClient = app.Services.GetRequiredService<MessageBusClient>();
+await messageBusClient.InitializeAsync();
 
 app.UseHttpsRedirection();
 
